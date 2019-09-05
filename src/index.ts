@@ -45,17 +45,36 @@ class OpsCheck {
     const objInput = {
       time: new Date(),
       oil: {
-        level: values[0],
-        pressure: values[1],
-        temperature: values[2]
+        level: values[0] || 0,
+        temperature: values[1] || 0,
+        pressure: values[2] || 0
       },
       fuel: {
-        remain: values[3],
-        level: values[4]
+        remain: values[3] || 0,
+        level: values[4] || 0
       }
     };
 
     this.entries.push(new OpsCheckEntry(objInput));
+    this.displayEntries();
+  }
+
+  displayEntries() {
+    const disp: HTMLElement = document.getElementById("outputForm");
+    disp.innerHTML = "";
+    const table: HTMLElement = document.createElement("table");
+    disp.appendChild(table);
+
+    this.entries.forEach(entry => {
+      const row: HTMLElement = document.createElement("tr");
+      table.appendChild(row);
+
+      row.innerHTML = `<td>${entry.oil.level}</td>
+        <td>${entry.oil.temperature}</td>
+        <td>${entry.oil.pressure}</td>
+        <td>${entry.fuel.remain}</td>
+        <td>${entry.fuel.level}</td>`;
+    });
   }
 }
 
@@ -83,7 +102,7 @@ app.innerHTML = `<h1>Digital White Board</h1>
     </ul>
     <input id="submit" type="submit" />
   </div>
-  <div class="outputForm"></div>
+  <div id="outputForm" class="outputForm"></div>
 `;
 
 const submitBtn: HTMLElement = document.getElementById("submit");
