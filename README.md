@@ -1,2 +1,0 @@
-# whiteboard
-Created with CodeSandbox
